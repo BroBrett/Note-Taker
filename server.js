@@ -4,7 +4,7 @@ const fs = require("fs");
 const notes = JSON.parse(fs.readFileSync('db/db.json', 'utf8'));
 
 let app = express();
-let PORT = process.env.port || 3001;
+let PORT = process.env.port || 5000;
 
 var idCreate = () => {
   return 'id-' + Math.random().toString(36).substring(2, 16);
@@ -24,18 +24,10 @@ app.use(express.static("./public"));
       res.sendFile(path.join(__dirname, "./public/notes.html"));
   });
 
-//   Listed Notes
-  app.get("/notes", (req, res) => {
-      res.sendFile(path.join(__dirname, "./public/notes.html"));
-  });
-
-  app.post("/api/notes", (req, res) => {
-      let note= req.body;
-      note.id = uuidv1();
-      db.push(note);
-      fs.writerFileSync("./db/db.json", JSON.stringify(db));
-      res.json(db);
-  });
+  app.get("/api/notes", (req, res) => {
+    console.log(notes);
+    return res.json(notes);
+    });
 
   app.get("*", (req, res) => {
       res.sendFile(path.join(_dirname, "./public/index.html"));
@@ -63,5 +55,5 @@ app.delete("/api/notes/:id", (req, res) => {
 })
 
   app.listen(PORT, () => {
-      console.log(`Server started on http://localhost:${PORT}`);
+      console.log(`App listening on port ${PORT}`);
   });
