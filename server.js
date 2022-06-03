@@ -4,7 +4,7 @@ const fs = require("fs");
 const notes = JSON.parse(fs.readFileSync('db/db.json', 'utf8'));
 
 let app = express();
-let PORT = process.env.port || 5000;
+let PORT = process.env.PORT || 5000;
 
 var idCreate = () => {
   return 'id-' + Math.random().toString(36).substring(2, 16);
